@@ -217,3 +217,8 @@ pip-log.txt
 #FlashDevelop-Haxe-Project
 *.hxproj
 
+# archive files
+*.zip
+*.rar
+
+
