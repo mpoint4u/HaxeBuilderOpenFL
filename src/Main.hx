@@ -420,7 +420,8 @@ class Main extends ThreadServer<Client, Message>
 	{
 		// find out if there's a full message, and if so, how long it is.
 
-		var msg:String = buf.readString(0, len);
+		//var msg:String = buf.readString(0, len);
+		var msg:String = buf.getString(0, len);
 
 		if (!handshake_complete)
 		{
