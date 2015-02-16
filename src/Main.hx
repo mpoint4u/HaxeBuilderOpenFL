@@ -87,7 +87,7 @@ class Main extends ThreadServer<Client, Message>
 		
 		lib_name = "nme";
 		
-		var project_file_names:Array<String> = ["application.xml", "project.xml", ".nmml", ".hxproj",".as3proj"];
+		var project_file_names:Array<String> = ["application.xml", "project.xml", "build.xml" , ".nmml", ".hxproj",".as3proj"];
 		
 		for (i in 0...project_file_names.length)
 		{
@@ -97,7 +97,7 @@ class Main extends ThreadServer<Client, Message>
 			{
 				switch (project_file_names[i])
 				{
-					case "application.xml", "project.xml": 
+					case "application.xml", "project.xml", "build.xml": 
 						lib_name = "openfl";
 					case ".hxproj":
 						build_mode = "haxe";
