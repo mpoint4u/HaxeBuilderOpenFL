@@ -215,7 +215,7 @@ pip-log.txt
 .mr.developer.cfg
 
 #FlashDevelop-Haxe-Project
-*.hxproj
+#*.hxproj
 
 # archive files
 *.zip
