@@ -104,7 +104,8 @@ class Main extends ThreadServer<Client, Message>
 					case ".as3proj":
 						build_mode = "as3";
 				}
-				
+				trace("lib_name = " + lib_name);
+				trace("build_mode = " + build_mode);
 				break;
 			}
 		}
