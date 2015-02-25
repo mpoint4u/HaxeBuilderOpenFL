@@ -1,0 +1,4 @@
+-neko bin/HaxeBuilder.n
+-cp src
+-main Main
+-debug
