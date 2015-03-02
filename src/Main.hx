@@ -67,25 +67,28 @@ class Main extends ThreadServer<Client, Message>
 		super();
 		
 		build_mode = "flash";
+		trace("build_mode = " + build_mode);
 		
 		var args:Array<String> = Sys.args();
 		
-		for (arg in args)
+/*		for (arg in args)
 		{
 			if (arg == "html5")
 			{
 				build_mode = "html5";
 			}
-		}
+		}*/
 		
 		program_path = Sys.executablePath();	
-		program_path = checkPath(program_path.substring(0, program_path.lastIndexOf("\\")));
+//		program_path = checkPath(program_path.substring(0, program_path.lastIndexOf("\\")));   // !! WIN ONLY  !!
 		
 		project_path = Sys.getCwd();
+		trace(project_path);
 		
-		flex_sdk_path = "G:\\ApacheFlex\\"; 
+/*		flex_sdk_path = "G:\\ApacheFlex\\"; */
 		
-		lib_name = "nme";
+		lib_name = "openfl";
+		trace("lib_name = " + lib_name);
 		
 		var project_file_names:Array<String> = ["application.xml", "project.xml", "build.xml" , ".nmml", ".hxproj",".as3proj"];
 		
@@ -93,7 +96,7 @@ class Main extends ThreadServer<Client, Message>
 		{
 			project_file = FileUtils.searchFile(project_path, project_file_names[i]);
 			
-			if (project_file != null)
+/*			if (project_file != null)
 			{
 				switch (project_file_names[i])
 				{
@@ -107,7 +110,7 @@ class Main extends ThreadServer<Client, Message>
 				trace("lib_name = " + lib_name);
 				trace("build_mode = " + build_mode);
 				break;
-			}
+			}*/
 		}
 		
 		if (project_file == null)
@@ -116,9 +119,11 @@ class Main extends ThreadServer<Client, Message>
 			return;
 		}
 		
-		build_date = BuildUtils.getBuildDate(project_path + "bin\\.build_date");
+		build_date = BuildUtils.getBuildDate(project_path + "bin/.build_date");
+		trace(build_date.toString());
+
 		
-		if (build_mode == "as3")
+/*		if (build_mode == "as3")
 		{
 			Sys.setCwd("\"" + flex_sdk_path + "bin\\");
 			fcsh_process = new Process("fcsh", []);
@@ -126,29 +131,35 @@ class Main extends ThreadServer<Client, Message>
 			readUntilMatches(fcsh_process,"fcsh", 2);
 		}
 		else
-		{
+		{*/
 			BuildUtils.startCompilationServer();
-		}
+//		}
+
+
+
 		
 		if (build_date == null) build(project_path, project_file);
 		
 		var n:Int = null;
+
+
+
 		
-		if (build_mode == "as3")
+/*		if (build_mode == "as3")
 		{
 			n = Sys.command("start " + project_path + "bin\\index.html");
 		}
 		else
 		{
-			if (build_mode == "html5" || build_mode == "flash")
-			{
+			if (build_mode == "flash" || build_mode == "html5")
+			{*/
 				//Thread.create(Sys.command.bind("nekotools server -d " + project_path + "bin\\" + build_mode + "\\bin"));
 				//Sys.command("nekotools server -d " + project_path + "bin\\" + build_mode + "\\bin");
 				
 				var array:Array<String> = new Array();
 				array.push("server");
 				array.push("-d");
-				array.push(project_path + "bin\\" + build_mode + "\\bin");
+				array.push(project_path + "bin/" + build_mode + "/bin");
 				
 				var neko_server:Process = new Process("nekotools", array);
 				readUntilMatches(neko_server, "2000", 1);
@@ -161,12 +172,12 @@ class Main extends ThreadServer<Client, Message>
 				}
 
 				n = Sys.command("start " + "http://localhost:2000");
-			}
+/*			}
 			else
 			{
 				n = Sys.command("start " + project_path + "bin\\" + build_mode + "\\bin\\index.html");
 			}
-		}
+		}*/
 		
 		if (n != 0)
 		{
@@ -209,22 +220,22 @@ class Main extends ThreadServer<Client, Message>
 	
 	function createHtmlWrapper()
 	{
-		FileUtils.createFolders(project_path + "bin\\js");
+		FileUtils.createFolders(project_path + "bin/js");
 		
-		FileUtils.copy(program_path + "index.html", project_path + "bin\\index.html", false);
-		FileUtils.copy(program_path + "js\\swfobject.js", project_path + "bin\\js\\swfobject.js", false);
-		FileUtils.copy(program_path + "expressInstall.swf", project_path + "bin\\expressInstall.swf", false);
+		FileUtils.copy(program_path + "index.html", project_path + "bin/index.html", false);
+		FileUtils.copy(program_path + "js/swfobject.js", project_path + "bin/js/swfobject.js", false);
+		FileUtils.copy(program_path + "expressInstall.swf", project_path + "bin/expressInstall.swf", false);
 		
-		TextFileUtils.replaceString(project_path + "bin\\index.html", "StarlingTest.swf", "</head>", "<script>var flashvars = {};var params = {	menu: \"false\",scale: \"noScale\",allowFullscreen: \"true\",allowScriptAccess: \"always\",bgcolor: \"\",wmode: \"direct\"};var attributes = {id:\"StarlingTest\"};swfobject.embedSWF(\"StarlingTest.swf\", \"altContent\", \"100%\", \"100%\", \"10.0.0\",\"expressInstall.swf\", flashvars, params, attributes);</script></head>");
+		TextFileUtils.replaceString(project_path + "bin/index.html", "StarlingTest.swf", "</head>", "<script>var flashvars = {};var params = {	menu: \"false\",scale: \"noScale\",allowFullscreen: \"true\",allowScriptAccess: \"always\",bgcolor: \"\",wmode: \"direct\"};var attributes = {id:\"StarlingTest\"};swfobject.embedSWF(\"StarlingTest.swf\", \"altContent\", \"100%\", \"100%\", \"10.0.0\",\"expressInstall.swf\", flashvars, params, attributes);</script></head>");
 	}
 	
 	function checkPath(folder_path:String):String
 	{
 		var path:String = folder_path;
 		
-		if (path.charAt(path.length - 1)!= "\\")
+		if (path.charAt(path.length - 1)!= "/")
 		{
-			path += "\\";
+			path += "/";
 		}
 		
 		return path;
@@ -269,7 +280,7 @@ class Main extends ThreadServer<Client, Message>
 		
 		Sys.println("build started");
 		
-		if (build_mode == "as3")
+/*		if (build_mode == "as3")
 		{			
 			if (FileSystem.exists(flex_sdk_path + "bin\\mxmlc") && FileSystem.exists(flex_sdk_path + "bin\\fcsh"))
 			{								
@@ -304,7 +315,7 @@ class Main extends ThreadServer<Client, Message>
 			//mxmlc -load-config+=obj\HexagonMenuConfig.xml -debug=true -incremental=true -swf-version=20 -o obj\HexagonMenu635058830002070312
 		}
 		else
-		{
+		{*/
 			var additional_args:String = "";
 		
 			if (build_mode == "flash")
@@ -329,7 +340,7 @@ class Main extends ThreadServer<Client, Message>
 			//trace(n);
 			if (n == 0)
 			{
-				TextFileUtils.updateTextFile(project_path + "bin\\.build_date", build_date.toString());
+				TextFileUtils.updateTextFile(project_path + "bin/.build_date", build_date.toString());
 				Sys.println("build complete");
 			}
 			else
@@ -337,9 +348,9 @@ class Main extends ThreadServer<Client, Message>
 				Sys.println("build failed");
 			}
 			
-			checkHtmlPage(project_path + "bin\\" + build_mode + "\\bin\\index.html");
-			FileUtils.copy(program_path + "WebSocketTest.js", project_path + "bin\\" + build_mode + "\\bin\\WebSocketTest.js", false);
-		}
+			checkHtmlPage(project_path + "bin/" + build_mode + "/bin/index.html");
+			FileUtils.copy(program_path + "WebSocketTest.js", project_path + "bin/" + build_mode + "/bin/WebSocketTest.js", false);
+//		}
 		
 		sendUpdateMessage();
 		
