@@ -92,9 +92,13 @@ class Main extends ThreadServer<Client, Message>
 		
 		var project_file_names:Array<String> = ["application.xml", "project.xml", "build.xml" , ".nmml", ".hxproj",".as3proj"];
 		
-		for (i in 0...project_file_names.length)
-		{
-			project_file = FileUtils.searchFile(project_path, project_file_names[i]);
+//		for (i in 0...project_file_names.length){
+
+			project_file = "build.xml";
+			trace("project_file = " + project_file);
+
+
+			 //FileUtils.searchFile(project_path, project_file_names[i]);
 			
 /*			if (project_file != null)
 			{
@@ -111,7 +115,7 @@ class Main extends ThreadServer<Client, Message>
 				trace("build_mode = " + build_mode);
 				break;
 			}*/
-		}
+//		}
 		
 		if (project_file == null)
 		{
@@ -119,7 +123,7 @@ class Main extends ThreadServer<Client, Message>
 			return;
 		}
 		
-		build_date = BuildUtils.getBuildDate(project_path + "bin/.build_date");
+		build_date = Date.now();			// BuildUtils.getBuildDate(project_path + "bin/.build_date");
 		trace(build_date.toString());
 
 		
