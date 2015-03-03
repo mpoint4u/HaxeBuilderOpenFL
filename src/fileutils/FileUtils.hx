@@ -70,7 +70,7 @@ class FileUtils
 		
 		for (item in folder_contents)
 		{
-			var path:String = folder_path + "\\" + item;
+			var path:String = folder_path + "/" + item;
 			
 			if (!FileSystem.isDirectory(path))
 			{				
@@ -80,7 +80,7 @@ class FileUtils
 					break;
 				}
 			}
-			else if(recursive && (path != folder_path + "\\" + ignore_folder || ignore_folder == null))
+			else if(recursive && (path != folder_path + "/" + ignore_folder || ignore_folder == null))
 			{
 				if (scanFolder(path, date))
 				{
@@ -123,13 +123,13 @@ class FileUtils
 	
 	static public function createFolders(folder_path:String) 
 	{
-		var folders:Array<String> = folder_path.split("\\");
+		var folders:Array<String> = folder_path.split("/");
 		
 		var path:String = "";
 		
 		for (i in 0...folders.length)
 		{
-			path += folders[i] + "\\";
+			path += folders[i] + "/";
 			
 			if (!FileSystem.exists(path))
 			{

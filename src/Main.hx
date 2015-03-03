@@ -123,8 +123,11 @@ class Main extends ThreadServer<Client, Message>
 			return;
 		}
 		
-		build_date = null;				 //Date.now();	// BuildUtils.getBuildDate(project_path + "bin/.build_date");
-		//trace(build_date.toString());
+		BuildUtils.getBuildDate(project_path + "bin/.build_date");
+
+		if(build_date != null){
+			trace("build_date = " + build_date.toString());  
+		}
 
 		
 /*		if (build_mode == "as3")
@@ -264,7 +267,8 @@ class Main extends ThreadServer<Client, Message>
 				
 				if (flash_player_version >= 11)
 				{
-					TextFileUtils.replaceString(file_path, "wmode:(.+)\"direct\"", "{}", "{},{wmode:\"direct\"}");
+				  //TextFileUtils.replaceString( file_path : String , check_string : String , old_string : String , new_string : String );
+					TextFileUtils.replaceString( file_path,           "wmode:(.+)\"direct\"", "{}",                 "{},{wmode:\"direct\"}");
 				}
 			}
 		}
@@ -340,7 +344,7 @@ class Main extends ThreadServer<Client, Message>
 
 				assembledBuildString =  "haxelib run " + lib_name + " build " + project_path + project_file + " " + build_mode + additional_args + " -debug" + " --connect 5000";
 				trace("build string will be: ' " + assembledBuildString + " '");
-				var n:Int = Sys.command("haxelib run " + lib_name + " build " + project_path + project_file + " " + build_mode + additional_args + " -debug" + " --connect 5000");
+				var n:Int = Sys.command(assembledBuildString);
 				//main.sendMessage(n);
 			//}
 			//);
