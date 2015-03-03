@@ -62,8 +62,7 @@ class Main extends ThreadServer<Client, Message>
 	var flex_sdk_path:String;
 	var fcsh_process:Process;
 	
-	function new()
-	{	
+	function new() {	
 		super();
 		
 		build_mode = "flash";
@@ -80,8 +79,9 @@ class Main extends ThreadServer<Client, Message>
 		}*/
 		
 		program_path = Sys.executablePath();	
-//		program_path = checkPath(program_path.substring(0, program_path.lastIndexOf("\\")));   // !! WIN ONLY  !!
-		
+		program_path = checkPath(program_path.substring(0, program_path.lastIndexOf("/")));   // !! WIN ONLY  !!
+		trace(program_path);
+
 		project_path = Sys.getCwd();
 		trace(project_path);
 		
@@ -123,7 +123,7 @@ class Main extends ThreadServer<Client, Message>
 			return;
 		}
 		
-		build_date = Date.now();			// BuildUtils.getBuildDate(project_path + "bin/.build_date");
+		build_date = null;				 //Date.now();	// BuildUtils.getBuildDate(project_path + "bin/.build_date");
 		trace(build_date.toString());
 
 		
@@ -281,6 +281,7 @@ class Main extends ThreadServer<Client, Message>
 	public function build(project_path:String, project_file:String) 
 	{	
 		var current_time:Float = Sys.time();
+		trace("build function called ..."); //at " + current_time.toString);
 		
 		Sys.println("build started");
 		
@@ -320,6 +321,7 @@ class Main extends ThreadServer<Client, Message>
 		}
 		else
 		{*/
+			var assembledBuildString = "";
 			var additional_args:String = "";
 		
 			if (build_mode == "flash")
@@ -328,11 +330,16 @@ class Main extends ThreadServer<Client, Message>
 			}
 			
 			build_date = Date.now();
+
+
 			
 			//var t1:Thread = Thread.create(
 			//function ()
 			//{
 				//var main:Thread = Thread.readMessage(true);
+
+				assembledBuildString =  "haxelib run " + lib_name + " build " + project_path + project_file + " " + build_mode + additional_args + " -debug" + " --connect 5000";
+				trace("build string will be: ' " + assembledBuildString + " '");
 				var n:Int = Sys.command("haxelib run " + lib_name + " build " + project_path + project_file + " " + build_mode + additional_args + " -debug" + " --connect 5000");
 				//main.sendMessage(n);
 			//}
