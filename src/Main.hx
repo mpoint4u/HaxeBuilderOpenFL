@@ -178,7 +178,7 @@ class Main extends ThreadServer<Client, Message>
 					Sys.sleep(0.5);
 				}
 
-				n = Sys.command("start " + "http://localhost:2000");
+				n = Sys.command("firefox " + "http://localhost:2000 ");
 /*			}
 			else
 			{
