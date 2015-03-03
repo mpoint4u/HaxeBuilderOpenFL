@@ -80,10 +80,10 @@ class Main extends ThreadServer<Client, Message>
 		
 		program_path = Sys.executablePath();	
 		program_path = checkPath(program_path.substring(0, program_path.lastIndexOf("/")));   // !! WIN ONLY  !!
-		trace(program_path);
+		trace("program_path = " + program_path);
 
 		project_path = Sys.getCwd();
-		trace(project_path);
+		trace("project_path = " + project_path);
 		
 /*		flex_sdk_path = "G:\\ApacheFlex\\"; */
 		
@@ -124,7 +124,7 @@ class Main extends ThreadServer<Client, Message>
 		}
 		
 		build_date = null;				 //Date.now();	// BuildUtils.getBuildDate(project_path + "bin/.build_date");
-		trace(build_date.toString());
+		//trace(build_date.toString());
 
 		
 /*		if (build_mode == "as3")
