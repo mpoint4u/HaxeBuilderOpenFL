@@ -349,7 +349,9 @@ class Main extends ThreadServer<Client, Message>
 
 				//assembledBuildString = "haxelib run lime build  /Users/marcus/DEV/github_repos/__forks__/stablexui/samples/05_custom_widget/build.xml  flash -debug"; //—connect 5000";
 
-				assembledBuildString = "haxelib run lime build  /Users/marcus/DEV/github_repos/__forks__/stablexui/samples/05_custom_widget/build.xml  flash -debug -Dfdb --connect 5000";
+				//assembledBuildString = "haxelib run lime build  /Users/marcus/DEV/github_repos/__forks__/stablexui/samples/05_custom_widget/build.xml  flash -debug -Dfdb --connect 5000";
+
+				assembledBuildString = "haxelib run lime build " + project_path + project_file  + " " + build_mode + " -debug -Dfdb --connect 5000";
 
 				trace("build string will be: ' " + assembledBuildString + " '");
 				var n:Int = Sys.command(assembledBuildString);
