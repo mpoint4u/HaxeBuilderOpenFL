@@ -178,7 +178,8 @@ class Main extends ThreadServer<Client, Message>
 					Sys.sleep(0.5);
 				}
 
-				n = Sys.command("nohup firefox " + "http://localhost:2000 &");
+				//n = Sys.command("nohup firefox " + "http://localhost:2000 &");
+				n = Sys.command("nohup chromium-browser " + "http://localhost:2000 &");
 /*			}
 			else
 			{
