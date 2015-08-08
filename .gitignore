@@ -3,3 +3,4 @@
 *.iml
 *.ipr
 #bin
+*.DS_Store
